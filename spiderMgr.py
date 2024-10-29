@@ -29,7 +29,8 @@ class SpiderMgr(QObject):
             'publish_video_strategy_type':'2',
         }
         self.titles = []
-        
+        self.nikename = ''
+        self.vedio_addrs = []
 
     user_urlChanged = Signal()
 
@@ -43,6 +44,7 @@ class SpiderMgr(QObject):
         self.user_url = user_url
         self.user_urlChanged.emit()
 
+    #url格式是否正确
     def get_sec_user_id(self):
         # 注意这里的+表示至少有一个字符，如果允许空ID则改为*?  
         pattern = r'^https://www\.douyin\.com/user/[A-Za-z0-9_-]+\?'  
@@ -52,7 +54,6 @@ class SpiderMgr(QObject):
             self.parmas['sec_user_id'] = sec_user_id
             return True
         else:
-            print("url地址解析失败")
             return False
 
 
@@ -65,12 +66,12 @@ class SpiderMgr(QObject):
         resp.encoding = 'utf-8'
 
         data = json.loads(resp.text) 
+        self.nikename = data["aweme_list"][0]['author']['nickname']
         length = len(data["aweme_list"])
         for i in range(length):
             title = data["aweme_list"][i]['desc']
-            # vedio_addr = data["aweme_list"][i]['video']['play_addr']['url_list'][0]
-            print(title)
-            # print(vedio_addr)
-        # print(data["aweme_list"][0]['desc'])
+            self.titles.append(title)
+            vedio_addr = data["aweme_list"][i]['video']['play_addr']['url_list'][0]
+            self.vedio_addrs.append(vedio_addr)
         resp.close
         
