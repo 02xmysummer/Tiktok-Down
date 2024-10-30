@@ -27,6 +27,20 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>批量下载</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>全部下载</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -55,7 +69,7 @@
            <x>0</x>
            <y>0</y>
            <width>289</width>
-           <height>379</height>
+           <height>371</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">

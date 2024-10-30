@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QMainWindow,QWidget
+from PySide6.QtWidgets import QMainWindow,QWidget,QMessageBox
 sys.path.append("ui\\uic")
 from Ui_mainwindow import Ui_MainWindow
 from spiderMgr import SpiderMgr
@@ -14,13 +14,14 @@ class QMainWindow(QMainWindow):
         self.ui.find_btn.clicked.connect(self.on_find_btn_clicked)
     def on_find_btn_clicked(self):  
         # 在这里获取文本框的内容，并调用 set_user_url 方法  
-        self.spiderMgr.set_user_url(user_url=self.ui.url_edit.text()) 
-        self.spiderMgr.get_media_url()
-        if self.spiderMgr.get_sec_user_id():
+        res = self.spiderMgr.addTask(user_url=self.ui.url_edit.text()) 
+        if res:
             download_widget = QWidget()  
             download_ui = Ui_Form()  
             download_ui.setupUi(download_widget)  # 设置 Ui_Form 的布局到新的 QWidget 实例上  
 
-            # 将新的 QWidget 实例添加到 tabWidget 中  
-            self.ui.tabWidget.addTab(download_widget, self.spiderMgr.nikename + "的视频列表")  # 使用更有意义的标签名  
-            download_ui.memsetTab(self.spiderMgr.titles)
+                # 将新的 QWidget 实例添加到 tabWidget 中  
+            self.ui.tabWidget.addTab(download_widget, self.spiderMgr.tasks[-1].nikename + "的视频列表")  # 使用更有意义的标签名  
+            download_ui.add_down_list(self.spiderMgr.tasks[-1].titles)
+
+                
