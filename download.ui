@@ -18,9 +18,9 @@
     <widget class="QWidget" name="widget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="title_label">
         <property name="text">
-         <string>某人的视频列表</string>
+         <string>av标题</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -28,14 +28,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="down_btn">
         <property name="text">
          <string>批量下载</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="all_down_btn">
         <property name="text">
          <string>全部下载</string>
         </property>

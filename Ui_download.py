@@ -12,8 +12,8 @@ from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,QStandardItemModel,QStandardItem,
-    QImage, QKeySequence, QLinearGradient, QPainter,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,QStandardItemModel,QStandardItem,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDockWidget, QHBoxLayout, QLabel,
     QListView, QPushButton, QScrollArea, QSizePolicy,
@@ -30,21 +30,21 @@ class Ui_Form(object):
         self.widget.setObjectName(u"widget")
         self.horizontalLayout = QHBoxLayout(self.widget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.label = QLabel(self.widget)
-        self.label.setObjectName(u"label")
-        self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.title_label = QLabel(self.widget)
+        self.title_label.setObjectName(u"title_label")
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.horizontalLayout.addWidget(self.label)
+        self.horizontalLayout.addWidget(self.title_label)
 
-        self.pushButton = QPushButton(self.widget)
-        self.pushButton.setObjectName(u"pushButton")
+        self.down_btn = QPushButton(self.widget)
+        self.down_btn.setObjectName(u"down_btn")
+        #
+        self.horizontalLayout.addWidget(self.down_btn)
 
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.all_down_btn = QPushButton(self.widget)
+        self.all_down_btn.setObjectName(u"all_down_btn")
 
-        self.pushButton_2 = QPushButton(self.widget)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-
-        self.horizontalLayout.addWidget(self.pushButton_2)
+        self.horizontalLayout.addWidget(self.all_down_btn)
 
 
         self.verticalLayout.addWidget(self.widget)
@@ -89,31 +89,41 @@ class Ui_Form(object):
 
 
         self.retranslateUi(Form)
-
         QMetaObject.connectSlotsByName(Form)
+        self.down_btn.clicked.connect(self.on_down_btn_clicked) 
+        self.selected_indices = [] 
+        self.all_down_btn.clicked.connect(lambda:print(self.get_indexs()))
+
     # setupUi
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.label.setText(QCoreApplication.translate("Form", u"\u67d0\u4eba\u7684\u89c6\u9891\u5217\u8868", None))
-        self.pushButton.setText(QCoreApplication.translate("Form", u"\u6279\u91cf\u4e0b\u8f7d", None))
-        self.pushButton_2.setText(QCoreApplication.translate("Form", u"\u5168\u90e8\u4e0b\u8f7d", None))
+        self.title_label.setText(QCoreApplication.translate("Form", u"av\u6807\u9898", None))
+        self.down_btn.setText(QCoreApplication.translate("Form", u"\u6279\u91cf\u4e0b\u8f7d", None))
+        self.all_down_btn.setText(QCoreApplication.translate("Form", u"\u5168\u90e8\u4e0b\u8f7d", None))
     # retranslateUi
 
     def add_down_list(self,titles):
-        # slm = QStringListModel()  # 创建model
-        # slm.setStringList(titles)  # 将数据设置到model
-        # self.listView.setModel(slm)
-                # 创建 QStandardItemModel  
         model = QStandardItemModel()  
         self.listView.setModel(model)  
-  
-        # 设置列标题（如果需要）  
-        # model.setHorizontalHeaderLabels(["Title"])  
-  
-        # 添加项目到模型，每个项目都是 checkable 的  
         for title in titles:  
             item = QStandardItem(title)  
             item.setCheckable(True)  
             item.setCheckState(Qt.Unchecked)  # 初始状态为未选中  
             model.appendRow(item)  
+
+    def set_title(self,name):
+        self.title_label.setText(name+'的视频列表')
+
+    def on_down_btn_clicked(self):  
+        model = self.listView.model() 
+        selected_indices = [] 
+        for row in range(model.rowCount()):  
+            item = model.item(row)  
+            if item.checkState() == Qt.Checked:  
+                selected_indices.append(row)  # 添加被选中项的行下标  
+        if self.selected_indices != selected_indices:
+            self.selected_indices = selected_indices
+
+    def get_indexs(self):
+        return self.selected_indices
