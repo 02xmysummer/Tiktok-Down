@@ -1,10 +1,10 @@
 import sys
-from PySide6.QtWidgets import QMainWindow,QWidget,QMessageBox
+from PySide6.QtWidgets import QMainWindow,QWidget,QMessageBox,QPushButton,QListWidget
 from PySide6.QtCore import Signal
 sys.path.append("ui\\uic")
 from Ui_mainwindow import Ui_MainWindow
 from spiderMgr import SpiderMgr
-from Ui_download import Ui_Form
+from downWidget import DownloadWidget
 class QMainWindow(QMainWindow):
 
     def __init__(self):
@@ -14,25 +14,43 @@ class QMainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.spiderMgr.user_url = self.ui.url_edit.text()
         self.ui.find_btn.clicked.connect(self.find_btn_clicked)
-        self.down_tab = []
-
-        download_ui.down_btn.clicked.connect(self.spiderMgr.down_vedio(self.spiderMgr.tasks[-1].vedio_addrs,download_ui.get_select_indexs(),user_url=self.ui.url_edit.text()))
-
-
-    down_tabChanged = Signal()
-    
+        #lambda:print(self.ui.tabWidget.currentIndex())
+        self.ui.tabWidget.currentChanged.connect(self.conn)
     def find_btn_clicked(self): 
         # 在这里获取文本框的内容，并调用 set_user_url 方法  
         res = self.spiderMgr.addTask(user_url=self.ui.url_edit.text()) 
 
         if res:
-            download_widget = QWidget()  
-            download_ui = Ui_Form()  
-            download_ui.setupUi(download_widget)  # 设置 Ui_Form 的布局到新的 QWidget 实例上  
-            self.down_tab.append(download_ui)
-            self.down_tabChanged.emit()
-            # 将新的 QWidget 实例添加到 tabWidget 中  
-            download_ui.set_title(self.spiderMgr.tasks[-1].nikename)
-            download_ui.add_down_list(self.spiderMgr.tasks[-1].titles,self.spiderMgr.tasks[-1].vedio_addrs)
-            self.ui.tabWidget.addTab(download_widget, self.spiderMgr.tasks[-1].nikename)  # 使用更有意义的标签名  
+            self.add_tab(self.spiderMgr.tasks[-1].nikename,self.spiderMgr.tasks[-1].titles,self.spiderMgr.tasks[-1].vedio_addrs,self.ui.url_edit.text())
+            
 
+
+
+    def add_tab(self,title_name,titles,vedio_addrs,user_url):
+        download_widget = DownloadWidget()  
+        download_widget.set_title(title_name)
+        download_widget.add_down_list(titles,vedio_addrs,user_url)
+        self.ui.tabWidget.addTab(download_widget, title_name)  # 使用更有意义的标签名  
+
+    def conn(self,index):
+        if index >= 2:
+            currentWidget = self.ui.tabWidget.currentWidget()
+            down_btn = currentWidget.findChild(QPushButton, "down_btn")
+            down_btn.clicked.connect(self.get_select_indexs)
+
+    def get_select_indexs(self): 
+        index = self.ui.tabWidget.currentIndex()
+        currentWidget = self.ui.tabWidget.currentWidget()
+        listWidget = currentWidget.findChild(QListWidget, "listWidget")
+        count = listWidget.count()  
+        cb_list = [listWidget.itemWidget(listWidget.item(i)) for i in range(count)]  
+        length = len(cb_list)
+        chooses = []  
+        vedio_addrs = currentWidget.ui.vedio_addrs
+        titles = currentWidget.ui.titles
+        user_url = currentWidget.ui.user_url
+        nikename = self.ui.tabWidget.tabText(index)
+        for i in range(length):  
+            if cb_list[i].isChecked():  
+                chooses.append(i)  
+        self.spiderMgr.down_vedio(nikename,titles,vedio_addrs,chooses,user_url)

@@ -13,12 +13,12 @@ from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,QStandardItemModel,QStandardItem,
+    QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDockWidget, QHBoxLayout, QLabel,
-    QListView, QPushButton, QScrollArea, QSizePolicy,
-    QVBoxLayout, QWidget)
-import requests
+    QListWidget, QListWidgetItem, QPushButton, QScrollArea,QCheckBox,
+    QSizePolicy, QVBoxLayout, QWidget)
+
 class Ui_Form(QObject):
     def setupUi(self, Form):
         if not Form.objectName():
@@ -38,7 +38,7 @@ class Ui_Form(QObject):
 
         self.down_btn = QPushButton(self.widget)
         self.down_btn.setObjectName(u"down_btn")
-        #
+
         self.horizontalLayout.addWidget(self.down_btn)
 
         self.all_down_btn = QPushButton(self.widget)
@@ -75,10 +75,10 @@ class Ui_Form(QObject):
         self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 289, 371))
         self.horizontalLayout_3 = QHBoxLayout(self.scrollAreaWidgetContents)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.listView = QListView(self.scrollAreaWidgetContents)
-        self.listView.setObjectName(u"listView")
+        self.listWidget = QListWidget(self.scrollAreaWidgetContents)
+        self.listWidget.setObjectName(u"listWidget")
 
-        self.horizontalLayout_3.addWidget(self.listView)
+        self.horizontalLayout_3.addWidget(self.listWidget)
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
@@ -88,16 +88,9 @@ class Ui_Form(QObject):
         self.verticalLayout.addWidget(self.widget_2)
 
 
-        self.retranslateUi(Form)
         QMetaObject.connectSlotsByName(Form)
-        self.selected_indices = [] 
-        self.titles = []
-        self.vedio_addrs = []
-        # self.all_down_btn.clicked.connect(lambda:print(self.get_indexs()))
-        # self.all_down_btn.clicked.connect(self.get_indexs)
-
     # setupUi
-    # down_clicked = Signal()
+
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.title_label.setText(QCoreApplication.translate("Form", u"av\u6807\u9898", None))
@@ -105,25 +98,6 @@ class Ui_Form(QObject):
         self.all_down_btn.setText(QCoreApplication.translate("Form", u"\u5168\u90e8\u4e0b\u8f7d", None))
     # retranslateUi
 
-    def add_down_list(self,titles,vedio_addrs):
-        self.titles = titles
-        self.vedio_addrs = vedio_addrs
-        model = QStandardItemModel()  
-        self.listView.setModel(model)  
-        for title in titles:  
-            item = QStandardItem(title)  
-            item.setCheckable(True)  
-            item.setCheckState(Qt.Unchecked)  # 初始状态为未选中  
-            model.appendRow(item)  
-
-    def set_title(self,name):
-        self.title_label.setText(name+'的视频列表')
-
-    def get_select_indexs(self):  
-        model = self.listView.model() 
-        selected_indices = [] 
-        for row in range(model.rowCount()):  
-            item = model.item(row)  
-            if item.checkState() == Qt.Checked:  
-                selected_indices.append(row)  # 添加被选中项的行下标  
-        return selected_indices
+  
+  
+          

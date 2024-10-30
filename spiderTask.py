@@ -27,7 +27,7 @@ class SpiderTask(QObject):
         self.vedio_addrs = []
         self.get_media_url()
 
-    user_urlChanged = Signal()
+    user_urlChanged = Signal(str)
 
 
     def get_user_url(self):
@@ -37,7 +37,7 @@ class SpiderTask(QObject):
         if self.user_url == user_url:
             return
         self.user_url = user_url
-        self.user_urlChanged.emit()
+        self.user_urlChanged.emit(self.user_url)
 
     #url格式是否正确
     def get_sec_user_id(self):
