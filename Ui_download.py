@@ -9,7 +9,7 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
+    QMetaObject, QObject, QPoint, QRect,Signal,
     QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
@@ -18,8 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDockWidget, QHBoxLayout, QLabel,
     QListView, QPushButton, QScrollArea, QSizePolicy,
     QVBoxLayout, QWidget)
-
-class Ui_Form(object):
+import requests
+class Ui_Form(QObject):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -90,12 +90,14 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         QMetaObject.connectSlotsByName(Form)
-        self.down_btn.clicked.connect(self.on_down_btn_clicked) 
         self.selected_indices = [] 
-        self.all_down_btn.clicked.connect(lambda:print(self.get_indexs()))
+        self.titles = []
+        self.vedio_addrs = []
+        # self.all_down_btn.clicked.connect(lambda:print(self.get_indexs()))
+        # self.all_down_btn.clicked.connect(self.get_indexs)
 
     # setupUi
-
+    # down_clicked = Signal()
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.title_label.setText(QCoreApplication.translate("Form", u"av\u6807\u9898", None))
@@ -103,7 +105,9 @@ class Ui_Form(object):
         self.all_down_btn.setText(QCoreApplication.translate("Form", u"\u5168\u90e8\u4e0b\u8f7d", None))
     # retranslateUi
 
-    def add_down_list(self,titles):
+    def add_down_list(self,titles,vedio_addrs):
+        self.titles = titles
+        self.vedio_addrs = vedio_addrs
         model = QStandardItemModel()  
         self.listView.setModel(model)  
         for title in titles:  
@@ -115,15 +119,11 @@ class Ui_Form(object):
     def set_title(self,name):
         self.title_label.setText(name+'的视频列表')
 
-    def on_down_btn_clicked(self):  
+    def get_select_indexs(self):  
         model = self.listView.model() 
         selected_indices = [] 
         for row in range(model.rowCount()):  
             item = model.item(row)  
             if item.checkState() == Qt.Checked:  
                 selected_indices.append(row)  # 添加被选中项的行下标  
-        if self.selected_indices != selected_indices:
-            self.selected_indices = selected_indices
-
-    def get_indexs(self):
-        return self.selected_indices
+        return selected_indices

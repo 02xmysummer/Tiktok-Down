@@ -1,29 +1,38 @@
 import sys
 from PySide6.QtWidgets import QMainWindow,QWidget,QMessageBox
+from PySide6.QtCore import Signal
 sys.path.append("ui\\uic")
 from Ui_mainwindow import Ui_MainWindow
 from spiderMgr import SpiderMgr
 from Ui_download import Ui_Form
 class QMainWindow(QMainWindow):
+
     def __init__(self):
         super(QMainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.spiderMgr = SpiderMgr()
         self.ui.setupUi(self)
         self.spiderMgr.user_url = self.ui.url_edit.text()
-        self.ui.find_btn.clicked.connect(self.on_find_btn_clicked)
-    def on_find_btn_clicked(self):  
+        self.ui.find_btn.clicked.connect(self.find_btn_clicked)
+        self.down_tab = []
+
+        download_ui.down_btn.clicked.connect(self.spiderMgr.down_vedio(self.spiderMgr.tasks[-1].vedio_addrs,download_ui.get_select_indexs(),user_url=self.ui.url_edit.text()))
+
+
+    down_tabChanged = Signal()
+    
+    def find_btn_clicked(self): 
         # 在这里获取文本框的内容，并调用 set_user_url 方法  
         res = self.spiderMgr.addTask(user_url=self.ui.url_edit.text()) 
+
         if res:
             download_widget = QWidget()  
             download_ui = Ui_Form()  
             download_ui.setupUi(download_widget)  # 设置 Ui_Form 的布局到新的 QWidget 实例上  
-
+            self.down_tab.append(download_ui)
+            self.down_tabChanged.emit()
             # 将新的 QWidget 实例添加到 tabWidget 中  
             download_ui.set_title(self.spiderMgr.tasks[-1].nikename)
-            download_ui.add_down_list(self.spiderMgr.tasks[-1].titles)
+            download_ui.add_down_list(self.spiderMgr.tasks[-1].titles,self.spiderMgr.tasks[-1].vedio_addrs)
             self.ui.tabWidget.addTab(download_widget, self.spiderMgr.tasks[-1].nikename)  # 使用更有意义的标签名  
 
-
-                
