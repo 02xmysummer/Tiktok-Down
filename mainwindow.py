@@ -5,6 +5,7 @@ sys.path.append("ui\\uic")
 from generated_ui.Ui_mainwindow import Ui_MainWindow
 from custom_classes.spiderMgr import SpiderMgr
 from ui_controllers.downWidget import DownloadWidget
+from ui_controllers.settingsWidget import SettingsWidget
 class QMainWindow(QMainWindow):
 
     def __init__(self):
@@ -14,12 +15,15 @@ class QMainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.spiderMgr.user_url = self.ui.url_edit.text()
         self.ui.find_btn.clicked.connect(self.find_btn_clicked)
+        self.settingWidget = SettingsWidget()
         #lambda:print(self.ui.tabWidget.currentIndex())
         self.ui.tabWidget.currentChanged.connect(self.conn)
+        self.ui.down_setting.clicked.connect(lambda:self.settingWidget.show())
+
     def find_btn_clicked(self): 
         # 在这里获取文本框的内容，并调用 set_user_url 方法  
         res = self.spiderMgr.addTask(user_url=self.ui.url_edit.text()) 
-
+        
         if res:
             self.add_tab(self.spiderMgr.tasks[-1].nikename,self.spiderMgr.tasks[-1].titles,self.spiderMgr.tasks[-1].vedio_addrs,self.ui.url_edit.text())
             
