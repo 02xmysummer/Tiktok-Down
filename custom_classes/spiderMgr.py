@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QMainWindow,QMessageBox
 from PySide6.QtCore import QObject,Signal
 import json
 import os
-from spiderTask import SpiderTask
+from custom_classes.spiderTask import SpiderTask
 # 整个爬虫的管理类
 class SpiderMgr(QObject):  
   

@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QWidget
  
 from PySide6.QtWidgets import QCheckBox,QListWidgetItem
 # 假设 Ui_Form 是从您的 .ui 文件通过 pyuic 生成的  
-from Ui_download import Ui_Form  # 确保这里的路径是正确的  
+from generated_ui.Ui_download import Ui_Form  # 确保这里的路径是正确的  
   
 class DownloadWidget(QWidget):  
     def __init__(self, parent=None):  

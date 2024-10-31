@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QMainWindow, QPushButton, QSizePolicy,
-    QTabWidget, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
+    QMainWindow, QPushButton, QSizePolicy, QTabWidget,
+    QToolBar, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -35,6 +35,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
+        self.tabWidget.setMouseTracking(False)
+        self.tabWidget.setTabsClosable(False)
         self.home_tab = QWidget()
         self.home_tab.setObjectName(u"home_tab")
         self.horizontalLayout_2 = QHBoxLayout(self.home_tab)
@@ -53,16 +55,10 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.find_btn)
 
-        self.next_btn = QPushButton(self.widget)
-        self.next_btn.setObjectName(u"next_btn")
+        self.down_setting = QPushButton(self.widget)
+        self.down_setting.setObjectName(u"down_setting")
 
-        self.horizontalLayout.addWidget(self.next_btn)
-
-        self.comboBox = QComboBox(self.widget)
-        self.comboBox.addItem("")
-        self.comboBox.setObjectName(u"comboBox")
-
-        self.horizontalLayout.addWidget(self.comboBox)
+        self.horizontalLayout.addWidget(self.down_setting)
 
 
         self.horizontalLayout_2.addWidget(self.widget)
@@ -106,6 +102,7 @@ class Ui_MainWindow(object):
 
         self.widget_3 = QWidget(self.down_tab)
         self.widget_3.setObjectName(u"widget_3")
+        self.widget_3.setMinimumSize(QSize(0, 600))
 
         self.verticalLayout_2.addWidget(self.widget_3)
 
@@ -114,10 +111,13 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.tabWidget)
 
         MainWindow.setCentralWidget(self.centralwidget)
+        self.toolBar = QToolBar(MainWindow)
+        self.toolBar.setObjectName(u"toolBar")
+        MainWindow.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.toolBar)
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -129,9 +129,7 @@ class Ui_MainWindow(object):
         self.home_tab.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.find_btn.setText(QCoreApplication.translate("MainWindow", u"\u67e5\u627e", None))
-        self.next_btn.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u4e00\u9875", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"\u6211\u7684\u6536\u85cf\u5939", None))
-
+        self.down_setting.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u8f7d\u8bbe\u7f6e", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.home_tab), QCoreApplication.translate("MainWindow", u"\u4e3b\u9875", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u603b\u8ba1\uff1a0/\u4e0b\u8f7d\u4e2d\uff1a0\u6682\u505c\uff1a0\u4e0b\u8f7d\u5b8c\uff1a0\u961f\u5217\u4e2d\uff1a0", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u5168\u90e8\u7ee7\u7eed", None))
@@ -139,5 +137,6 @@ class Ui_MainWindow(object):
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u5168\u90e8\u5220\u9664", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u5220\u9664\u5df2\u5b8c\u6210", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.down_tab), QCoreApplication.translate("MainWindow", u"\u4e0b\u8f7d\u9875", None))
+        self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
 

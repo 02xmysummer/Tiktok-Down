@@ -9,17 +9,17 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,Signal,
+    QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDockWidget, QHBoxLayout, QLabel,
-    QListWidget, QListWidgetItem, QPushButton, QScrollArea,QCheckBox,
+    QListWidget, QListWidgetItem, QPushButton, QScrollArea,
     QSizePolicy, QVBoxLayout, QWidget)
 
-class Ui_Form(QObject):
+class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -88,6 +88,8 @@ class Ui_Form(QObject):
         self.verticalLayout.addWidget(self.widget_2)
 
 
+        self.retranslateUi(Form)
+
         QMetaObject.connectSlotsByName(Form)
     # setupUi
 
@@ -98,6 +100,3 @@ class Ui_Form(QObject):
         self.all_down_btn.setText(QCoreApplication.translate("Form", u"\u5168\u90e8\u4e0b\u8f7d", None))
     # retranslateUi
 
-  
-  
-          

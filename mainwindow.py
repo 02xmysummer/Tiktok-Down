@@ -2,9 +2,9 @@ import sys
 from PySide6.QtWidgets import QMainWindow,QWidget,QMessageBox,QPushButton,QListWidget
 from PySide6.QtCore import Signal
 sys.path.append("ui\\uic")
-from Ui_mainwindow import Ui_MainWindow
-from spiderMgr import SpiderMgr
-from downWidget import DownloadWidget
+from generated_ui.Ui_mainwindow import Ui_MainWindow
+from custom_classes.spiderMgr import SpiderMgr
+from ui_controllers.downWidget import DownloadWidget
 class QMainWindow(QMainWindow):
 
     def __init__(self):

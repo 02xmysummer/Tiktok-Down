@@ -14,7 +14,7 @@ class SpiderTask(QObject):
 
         self.headers = headers
         self.proxies = proxies
-        self.count = 20
+        self.count = 40
         self.parmas = {
             'max_cursor':'0',
             'aid':'6383', #可能是某种应用或服务的标识符
