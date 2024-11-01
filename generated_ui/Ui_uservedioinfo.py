@@ -36,15 +36,15 @@ class Ui_Form(object):
 
         self.horizontalLayout.addWidget(self.title_label)
 
+        self.select_all = QPushButton(self.widget)
+        self.select_all.setObjectName(u"select_all")
+
+        self.horizontalLayout.addWidget(self.select_all)
+
         self.down_btn = QPushButton(self.widget)
         self.down_btn.setObjectName(u"down_btn")
 
         self.horizontalLayout.addWidget(self.down_btn)
-
-        self.all_down_btn = QPushButton(self.widget)
-        self.all_down_btn.setObjectName(u"all_down_btn")
-
-        self.horizontalLayout.addWidget(self.all_down_btn)
 
 
         self.verticalLayout.addWidget(self.widget)
@@ -96,7 +96,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.title_label.setText(QCoreApplication.translate("Form", u"av\u6807\u9898", None))
-        self.down_btn.setText(QCoreApplication.translate("Form", u"\u6279\u91cf\u4e0b\u8f7d", None))
-        self.all_down_btn.setText(QCoreApplication.translate("Form", u"\u5168\u90e8\u4e0b\u8f7d", None))
+        self.select_all.setText(QCoreApplication.translate("Form", u"\u5168\u9009", None))
+        self.down_btn.setText(QCoreApplication.translate("Form", u"\u4e0b\u8f7d", None))
     # retranslateUi
 

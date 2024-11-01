@@ -41,8 +41,6 @@ class SpiderMgr(QObject):
             ,'User_Agent':user_agent
             ,'Referer':user_url
         }
-
-
         task = SpiderTask(url=self.url,headers=headers,proxies=self.proxies,user_url=user_url)
         self.tasks.append(task)
         return True

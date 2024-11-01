@@ -28,16 +28,16 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="down_btn">
+       <widget class="QPushButton" name="select_all">
         <property name="text">
-         <string>批量下载</string>
+         <string>全选</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="all_down_btn">
+       <widget class="QPushButton" name="down_btn">
         <property name="text">
-         <string>全部下载</string>
+         <string>下载</string>
         </property>
        </widget>
       </item>
