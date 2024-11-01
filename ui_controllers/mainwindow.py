@@ -6,6 +6,7 @@ from generated_ui.Ui_mainwindow import Ui_MainWindow
 from custom_classes.spiderMgr import SpiderMgr
 from ui_controllers.uservedioinfo import UserVedioInfo
 from ui_controllers.settingsWidget import SettingsWidget
+from ui_controllers.downinfoWidget import DownInfoWidget
 import asyncio
 class QMainWindow(QMainWindow):
     def __init__(self):
@@ -13,12 +14,20 @@ class QMainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.settingWidget = SettingsWidget()
         self.spiderMgr = SpiderMgr()
+        self.downinfoWidget = DownInfoWidget()
         self.ui.setupUi(self)
+        self.ui.tabWidget.addTab(self.downinfoWidget, "下载中")
+
+
+        
         self.spiderMgr.set_configs(self.settingWidget.configs)
         self.ui.find_btn.clicked.connect(self.find_btn_clicked)
-        self.ui.tabWidget.currentChanged.connect(self.conn)
+        self.ui.tabWidget.currentChanged.connect(self.to_down_widget)
         self.ui.down_setting.clicked.connect(lambda:self.settingWidget.show())
         self.settingWidget.configsChanged.connect(self.spiderMgr.set_configs)
+
+
+
 
     def find_btn_clicked(self): 
         # 在这里获取文本框的内容，并调用 set_user_url 方法  
@@ -39,13 +48,13 @@ class QMainWindow(QMainWindow):
         download_widget.add_down_list(titles,vedio_addrs,user_url)
         self.ui.tabWidget.addTab(download_widget, title_name)  # 使用更有意义的标签名  
 
-    def conn(self,index):
+    def to_down_widget(self,index):
         if index >= 2:
             currentWidget = self.ui.tabWidget.currentWidget()
             down_btn = currentWidget.findChild(QPushButton, "down_btn")
-            down_btn.clicked.connect(self.get_select_indexs)
+            down_btn.clicked.connect(self.down_select_vedio)
 
-    def get_select_indexs(self): 
+    def down_select_vedio(self): 
         index = self.ui.tabWidget.currentIndex()
         currentWidget = self.ui.tabWidget.currentWidget()
         listWidget = currentWidget.findChild(QListWidget, "listWidget")
@@ -57,7 +66,11 @@ class QMainWindow(QMainWindow):
         titles = currentWidget.ui.titles
         user_url = currentWidget.ui.user_url
         nikename = self.ui.tabWidget.tabText(index)
+        total_down = 0
         for i in range(length):  
             if cb_list[i].isChecked():  
-                chooses.append(i)  
+                chooses.append(i)
+                total_down+=1 
+        #修改下载界面
+        self.downinfoWidget.push_total_down(total_down) 
         asyncio.run(self.spiderMgr.down_vedio(nikename,titles,vedio_addrs,chooses,user_url))

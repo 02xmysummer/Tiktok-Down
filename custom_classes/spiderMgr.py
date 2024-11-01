@@ -16,6 +16,9 @@ class SpiderMgr(QObject):
         self.url = "https://www.douyin.com/aweme/v1/web/aweme/post/"
 
         self.tasks = []
+        #使用锁来控制下载
+        self.paused = False  
+        self.lock = asyncio.Lock()
 
     def set_configs(self,configs):
         self.configs = configs

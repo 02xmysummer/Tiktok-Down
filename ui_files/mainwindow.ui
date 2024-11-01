@@ -54,7 +54,11 @@
          <widget class="QWidget" name="widget" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <widget class="QLineEdit" name="url_edit"/>
+            <widget class="QLineEdit" name="url_edit">
+             <property name="placeholderText">
+              <string>请输入抖音主页视频地址</string>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QPushButton" name="find_btn">
@@ -75,64 +79,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="down_tab">
-       <attribute name="title">
-        <string>下载页</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QWidget" name="widget_2" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>总计：0/下载中：0暂停：0下载完：0队列中：0</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton">
-             <property name="text">
-              <string>全部继续</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_2">
-             <property name="text">
-              <string>全部暂停</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_3">
-             <property name="text">
-              <string>全部删除</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_4">
-             <property name="text">
-              <string>删除已完成</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="widget_3" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>600</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
+
      </widget>
     </item>
    </layout>
