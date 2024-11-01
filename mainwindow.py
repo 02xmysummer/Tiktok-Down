@@ -4,34 +4,36 @@ from PySide6.QtCore import Signal
 sys.path.append("ui\\uic")
 from generated_ui.Ui_mainwindow import Ui_MainWindow
 from custom_classes.spiderMgr import SpiderMgr
-from ui_controllers.downWidget import DownloadWidget
+from ui_controllers.uservedioinfo import UserVedioInfo
 from ui_controllers.settingsWidget import SettingsWidget
 class QMainWindow(QMainWindow):
-
     def __init__(self):
         super(QMainWindow, self).__init__()
         self.ui = Ui_MainWindow()
+        self.settingWidget = SettingsWidget()
         self.spiderMgr = SpiderMgr()
         self.ui.setupUi(self)
-        self.spiderMgr.user_url = self.ui.url_edit.text()
+        self.spiderMgr.set_configs(self.settingWidget.configs)
         self.ui.find_btn.clicked.connect(self.find_btn_clicked)
-        self.settingWidget = SettingsWidget()
-        #lambda:print(self.ui.tabWidget.currentIndex())
         self.ui.tabWidget.currentChanged.connect(self.conn)
         self.ui.down_setting.clicked.connect(lambda:self.settingWidget.show())
+        self.settingWidget.configsChanged.connect(self.spiderMgr.set_configs)
 
     def find_btn_clicked(self): 
         # 在这里获取文本框的内容，并调用 set_user_url 方法  
+        if self.ui.url_edit.text() == "":
+            return
         res = self.spiderMgr.addTask(user_url=self.ui.url_edit.text()) 
-        
         if res:
             self.add_tab(self.spiderMgr.tasks[-1].nikename,self.spiderMgr.tasks[-1].titles,self.spiderMgr.tasks[-1].vedio_addrs,self.ui.url_edit.text())
             
-
+        else:
+            QMessageBox.question(self, 'eror',  
+                                     "链接解析失败", QMessageBox.Cancel , QMessageBox.Cancel)  
 
 
     def add_tab(self,title_name,titles,vedio_addrs,user_url):
-        download_widget = DownloadWidget()  
+        download_widget = UserVedioInfo()  
         download_widget.set_title(title_name)
         download_widget.add_down_list(titles,vedio_addrs,user_url)
         self.ui.tabWidget.addTab(download_widget, title_name)  # 使用更有意义的标签名  

@@ -2,11 +2,11 @@ from PySide6.QtWidgets import QWidget
  
 from PySide6.QtWidgets import QCheckBox,QListWidgetItem
 # 假设 Ui_Form 是从您的 .ui 文件通过 pyuic 生成的  
-from generated_ui.Ui_download import Ui_Form  # 确保这里的路径是正确的  
+from generated_ui.Ui_uservedioinfo import Ui_Form  # 确保这里的路径是正确的  
   
-class DownloadWidget(QWidget):  
+class UserVedioInfo(QWidget):  
     def __init__(self, parent=None):  
-        super(DownloadWidget, self).__init__(parent)  
+        super(UserVedioInfo, self).__init__(parent)  
         self.ui = Ui_Form()  
         self.ui.setupUi(self)  
           
