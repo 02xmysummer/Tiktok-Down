@@ -6,6 +6,7 @@ from generated_ui.Ui_mainwindow import Ui_MainWindow
 from custom_classes.spiderMgr import SpiderMgr
 from ui_controllers.uservedioinfo import UserVedioInfo
 from ui_controllers.settingsWidget import SettingsWidget
+import asyncio
 class QMainWindow(QMainWindow):
     def __init__(self):
         super(QMainWindow, self).__init__()
@@ -59,4 +60,4 @@ class QMainWindow(QMainWindow):
         for i in range(length):  
             if cb_list[i].isChecked():  
                 chooses.append(i)  
-        self.spiderMgr.down_vedio(nikename,titles,vedio_addrs,chooses,user_url)
+        asyncio.run(self.spiderMgr.down_vedio(nikename,titles,vedio_addrs,chooses,user_url))
